@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.png" alt="DivinuS Mod Restart" width="320">
+  <img src="logo.png" alt="DivinuS Mod Restart" width="320">
 </p>
 
 <h1 align="center">DivinuS Mod Restart</h1>
