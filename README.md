@@ -258,52 +258,6 @@ O mod escreve no script log do servidor (`script_*.log`, na pasta profile). Toda
 
 ---
 
-## Para desenvolvedores
-
-### Estrutura do repositório
-
-```
-DivinuS-Mod-Restart/
-├── DivinuS_Mod_Restart/            código-fonte (vira o PBO)
-│   ├── $PBOPREFIX$.txt
-│   ├── config.cpp
-│   ├── data/logo.paa
-│   ├── gui/images/branco.paa
-│   ├── gui/layouts/restart.layout
-│   ├── sounds/sirene.ogg
-│   └── Scripts/
-│       ├── 3_Game/DivinuS_Restart/DVS_RestartClient.c
-│       └── 5_Mission/DivinuS_Restart/
-│           ├── DVS_RestartConfig.c
-│           ├── MissionServer.c
-│           └── MissionGameplay.c
-├── @DivinuS_Mod_Restart/mod.cpp    nome, autor e logo no launcher
-├── profiles/restart/restart.json   exemplo de configuração
-└── docs/logo.png
-```
-
-### Como funciona por dentro
-
-- **Servidor (`MissionServer.c`)**: lê o `restart.json`, calcula o próximo restart e envia o horário para os jogadores por RPC, a cada 30 segundos e quando alguém conecta. Na hora do logout, chama `OnClientDisconnectedEvent`, o mesmo caminho do botão **Sair** do DayZ. Na hora do restart, salva e desconecta quem sobrou e chama `RequestRestart` ou `RequestExit`.
-- **Jogador (`MissionGameplay.c`)**: desenha o aviso, toca a sirene (SoundSet `DVS_RestartSiren_SoundSet`, sem posição 3D) e faz o personagem sentar (gesto `ID_EMOTE_SITA`).
-- **Sincronização (`DVS_RestartClient.c`)**: recebe as configurações enviadas pelo servidor. O RPC usa o id `1146508114`.
-
-### Compilar o PBO
-
-1. Abra o **Addon Builder** (DayZ Tools).
-2. Origem: a pasta `DivinuS_Mod_Restart`. Destino: `@DivinuS_Mod_Restart/addons`.
-3. Em **Options**, confira se o prefixo é `DivinuS_Mod_Restart` e adicione `*.c;*.layout;*.ogg;*.paa` em **List of files to copy directly**.
-4. Clique em **Pack**.
-
-### Assinar
-
-1. No **DS Utils** (DayZ Tools), use **DSCreateKey** para criar a sua chave. Isso gera um `.biprivatekey` e um `.bikey`.
-2. Use **DSSignFile** para assinar o `DivinuS_Mod_Restart.pbo`. O `.bisign` aparece ao lado do PBO.
-3. Coloque o `.bikey` em `@DivinuS_Mod_Restart/keys`.
-
-> **Nunca** envie o arquivo `.biprivatekey` para o GitHub nem para ninguém. O `.gitignore` deste repositório já bloqueia esse arquivo.
-
----
 
 ## Créditos
 
