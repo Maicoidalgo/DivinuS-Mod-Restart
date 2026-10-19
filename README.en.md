@@ -267,54 +267,6 @@ The mod writes to the server script log (`script_*.log`, in the profile folder).
 | The server closes and does not come back | On a host, use `DESLIGAR` and turn on the panel's auto-restart |
 | I changed the file and nothing changed | The file is only read when the server starts. Restart the server |
 
----
-
-## For developers
-
-### Repository layout
-
-```
-DivinuS-Mod-Restart/
-├── DivinuS_Mod_Restart/            source code (becomes the PBO)
-│   ├── $PBOPREFIX$.txt
-│   ├── config.cpp
-│   ├── data/logo.paa
-│   ├── gui/images/branco.paa
-│   ├── gui/layouts/restart.layout
-│   ├── sounds/sirene.ogg
-│   └── Scripts/
-│       ├── 3_Game/DivinuS_Restart/DVS_RestartClient.c
-│       └── 5_Mission/DivinuS_Restart/
-│           ├── DVS_RestartConfig.c
-│           ├── MissionServer.c
-│           └── MissionGameplay.c
-├── @DivinuS_Mod_Restart/mod.cpp    name, author and logo in the launcher
-├── profiles/restart/restart.json   example config
-└── docs/logo.png
-```
-
-### How it works inside
-
-- **Server (`MissionServer.c`)**: reads `restart.json`, computes the next restart and sends it to players by RPC, every 30 seconds and when someone connects. At logout time it calls `OnClientDisconnectedEvent`, the same path as DayZ's **Exit** button. At restart time it saves and disconnects anyone left and calls `RequestRestart` or `RequestExit`.
-- **Client (`MissionGameplay.c`)**: draws the warning, plays the siren (SoundSet `DVS_RestartSiren_SoundSet`, non-positional) and makes the character sit down (emote `ID_EMOTE_SITA`).
-- **Sync (`DVS_RestartClient.c`)**: receives the settings sent by the server. The RPC id is `1146508114`.
-
-### Building the PBO
-
-1. Open **Addon Builder** (DayZ Tools).
-2. Source: the `DivinuS_Mod_Restart` folder. Destination: `@DivinuS_Mod_Restart/addons`.
-3. In **Options**, make sure the prefix is `DivinuS_Mod_Restart` and add `*.c;*.layout;*.ogg;*.paa` to **List of files to copy directly**.
-4. Click **Pack**.
-
-### Signing
-
-1. In **DS Utils** (DayZ Tools), use **DSCreateKey** to create your key. This makes a `.biprivatekey` and a `.bikey`.
-2. Use **DSSignFile** to sign `DivinuS_Mod_Restart.pbo`. The `.bisign` appears next to the PBO.
-3. Put the `.bikey` in `@DivinuS_Mod_Restart/keys`.
-
-> **Never** upload the `.biprivatekey` to GitHub or send it to anyone. This repository's `.gitignore` already blocks that file.
-
----
 
 ## Credits
 
