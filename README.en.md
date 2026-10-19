@@ -5,7 +5,7 @@
 <h1 align="center">DivinuS Mod Restart</h1>
 
 <p align="center">
-  Automatic restart for <b>DayZ</b> servers with an on-screen warning, siren and safe logout, done entirely inside the mod.<br>
+  Automatic restart for <b>DayZ</b> servers with an on-screen warning, siren and safe logout, done entirely inside the mod.<br> 
   <a href="README.md">Versão em português</a>
 </p>
 
